@@ -1,8 +1,19 @@
-import { fetchUtils, DataProvider } from "react-admin";
+import { fetchUtils, Options, DataProvider } from "react-admin";
 import { stringify } from "query-string";
+import _ from "lodash";
 
-const apiUrl = process.env.REACT_APP_SECRET_CODE || 'http://localhost:8080/v1';
-const httpClient = fetchUtils.fetchJson;
+import { authProvider } from "./authProvider";
+
+const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080/v1';
+
+const httpClient = (url: string, options?: Options) => fetchUtils.fetchJson(
+    url,
+    _.merge(options || {}, {
+        headers: new Headers({
+            'Authorization': `Basic ${authProvider.getBasicAuthToken()}`
+        })
+    })
+);
 
 export const dataProvider: DataProvider = {
     getList: (resource, params) => {

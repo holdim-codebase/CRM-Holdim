@@ -1,30 +1,29 @@
+import { AuthProvider } from "react-admin";
 
-// Чтобы включить эту стратегию аутентификации,
-// передайте authProviderкомпоненту <Admin>:
-
-export const authProvider = {
-    // вызывается, когда пользователь пытается войти в систему
-    login: ({ username }) => {
-      localStorage.setItem("username", username);
-      // accept all username/password combinations
+export const authProvider: AuthProvider & { getBasicAuthToken: () => string } = {
+    login: ({ username, password }) => {
+      localStorage.setItem("token", btoa(`${username}:${password}`));
       return Promise.resolve();
     },
+
+    getBasicAuthToken: () => localStorage.getItem("token") || '',
+
     // вызывается, когда пользователь нажимает кнопку выхода
     logout: () => {
-      localStorage.removeItem("username");
+      localStorage.removeItem("token");
       return Promise.resolve();
     },
     // вызывается, когда API возвращает ошибку
     checkError: ({ status }) => {
       if (status === 401 || status === 403) {
-        localStorage.removeItem("username");
+        localStorage.removeItem("token");
         return Promise.reject();
       }
       return Promise.resolve();
     },
     // вызывается, когда пользователь переходит в новое место для проверки подлинности
     checkAuth: () => {
-      return localStorage.getItem("username")
+      return localStorage.getItem("token")
         ? Promise.resolve()
         : Promise.reject();
     },
