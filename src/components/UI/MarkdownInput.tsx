@@ -5,7 +5,11 @@ import { useInput, Labeled } from 'react-admin';
 
 import 'react-mde/lib/styles/css/react-mde-all.css';
 
-const MarkdownInput = (props) => {
+type Props = {
+  label: string
+  source: string
+}
+const MarkdownInput = (props: Props) => {
   const { label } = props
   const { field } = useInput({
     ...props,

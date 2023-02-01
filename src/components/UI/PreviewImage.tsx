@@ -1,4 +1,8 @@
-const PreviewImage = (props) => {
+type Props = {
+  src: string
+  size?: number
+}
+const PreviewImage = (props: Props) => {
   const { src, size = 150 } = props
 
   return <>

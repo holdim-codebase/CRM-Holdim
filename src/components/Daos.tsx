@@ -1,4 +1,4 @@
-import { useMediaQuery } from "@mui/material";
+import { useMediaQuery, Theme } from "@mui/material";
 import { List, Datagrid, TextField, DateField, SimpleList, ImageField, useRecordContext } from "react-admin";
 import TextAvailableField from "./UI/TextAvailableField";
 
@@ -7,7 +7,7 @@ export const DaosList = () => {
 
     // Чтобы использовать <Datagrid> компонент на рабочем столе и <SimpleList>компонент на мобильном устройстве.
     // Для этого нужно воспользоваться хуком useMediaQuery из MUI:
-    const isSmall = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+    const isSmall = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
     return (
         // List дочерние элементы могут быть чем угодно — даже настраиваемым компонентом React со своей собственной логикой.

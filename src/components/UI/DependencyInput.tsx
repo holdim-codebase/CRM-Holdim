@@ -1,8 +1,13 @@
 import { useEffect, useMemo } from 'react';
 import { useInput } from 'react-admin';
 
-const DependencyInput = (props) => {
-  const { label, source, dependencySource, process } = props
+type Props = {
+  source: string
+  dependencySource: string
+  process: (value: string) => string
+}
+const DependencyInput = (props: Props) => {
+  const { source, dependencySource, process } = props
   const imageInput = useInput({ source });
 
   const dependencyInput = useInput({ source: dependencySource });
