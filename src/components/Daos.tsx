@@ -1,8 +1,6 @@
 import { useMediaQuery } from "@mui/material";
-import { List, Datagrid, TextField, EmailField, SimpleList } from "react-admin";
-import MyUrlField from "./UI/MyUrlField";
-
-
+import { List, Datagrid, TextField, DateField, SimpleList, ImageField, useRecordContext } from "react-admin";
+import TextAvailableField from "./UI/TextAvailableField";
 
 
 export const DaosList = () => {
@@ -30,12 +28,16 @@ export const DaosList = () => {
                         например в апи айди лежит в api.id, то мы передаём id
                         или как именим компанием оно лежит в api.company.name
                         нам нужно передать company.name */}
-                        <TextField source="id" />
+                        <TextField source="id" label="ID" />
+                        <ImageField
+                            source="logo"
+                            sx={{ '& img': { maxWidth: 25, maxHeight: 25, objectFit: 'contain' } }}
+                        />
                         <TextField source="name" />
-                        <EmailField source="email" />
-                        <TextField source="phone" />
-                        <MyUrlField source="website" />
-                        <TextField source="company.name" />
+                        <TextField source="snapshotId" label="Snapshot ID" />
+                        <TextAvailableField source="overview" />
+                        <TextAvailableField source="tokenOverview" />
+                        <DateField source="createdAt" showTime />
                     </Datagrid>
                 ) : (
 
@@ -52,8 +54,6 @@ export const DaosList = () => {
                 tertiaryText={(record) => record.email}
                 />
                 )
-              
-                
             }
         </List>
     )

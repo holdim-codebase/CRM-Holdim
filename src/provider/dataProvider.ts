@@ -1,42 +1,29 @@
-import { fetchUtils } from "react-admin";
+import { fetchUtils, DataProvider } from "react-admin";
 import { stringify } from "query-string";
 
-const apiUrl = 'https://jsonplaceholder.typicode.com';
+const apiUrl = process.env.REACT_APP_SECRET_CODE || 'http://localhost:8080/v1';
 const httpClient = fetchUtils.fetchJson;
 
-
-
-export const dataProvider= {
-
+export const dataProvider: DataProvider = {
     getList: (resource, params) => {
-        // resource
-        // resource - это название запроса /{name}
-
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
         const query = {
             sort: JSON.stringify([field, order]),
-            range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
+            range: JSON.stringify([(page - 1) * perPage, perPage]),
             filter: JSON.stringify(params.filter),
         };
         const url = `${apiUrl}/${resource}?${stringify(query)}`;
-        console.log(params.filter)
-        // httpClient(url)
-        // httpClient(url) - это fetch функция, которая возвращает
-        // body - тело
-        // headers - хедер
-        // json - данные
-        // status - статуы
         return httpClient(url).then(({ headers, json }) => ({
             data: json,
-            total: parseInt('1', 10),
+            total: Number(headers.get('X-Total-Count')),
         }));
     },
 
     getOne: (resource, params) =>
-    httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
-        data: json,
-    })),
+        httpClient(`${apiUrl}/${resource}/${params.id}`).then(({ json }) => ({
+            data: json,
+        })),
 
     getMany: (resource, params) => {
         const query = {

@@ -1,20 +1,17 @@
-import { Admin, EditGuesser, ListGuesser, Resource } from "react-admin";
-import jsonServerProvider from "ra-data-json-server";
+import { Admin, Resource } from "react-admin";
+import PostIcon from "@mui/icons-material/Book";
+import BusinessIcon from '@mui/icons-material/Business';
+
 import { DaosList } from "./components/Daos";
-import { PostList } from "./components/Posts";
+import { DaoEdit } from "./components/DaoEdit";
+import { DaoCreate } from "./components/DaoCreate";
+import { ProposalsList } from "./components/Proposals";
 import { PostEdit } from "./components/PostEdit";
 import { PostCreated } from "./components/PostCreated";
-import PostIcon from "@mui/icons-material/Book";
-import UserIcon from "@mui/icons-material/Group";
 import { Dashboard } from "./components/Dashboard";
+
 import { authProvider } from "./provider/authProvider";
 import { dataProvider } from "./provider/dataProvider";
-
-
-//Читать Подключение к реальному API в туториале 
-
-// const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
-
                   
 const App = () => (
   //dataProvider
@@ -55,8 +52,7 @@ const App = () => (
 
     {/* Icon
     это атрибут который добавляет слева иконку к компаненту  */}
-    <Resource name="users" list={DaosList} icon={UserIcon} recordRepresentation="name"/> 
-
+    <Resource name="daos" options={{ label: 'DAOs' }} list={DaosList} edit={DaoEdit} create={DaoCreate} icon={BusinessIcon}/> 
 
 
     {/*recordRepresentation="name"/> 
@@ -73,7 +69,7 @@ const App = () => (
     
     Create
     create работает так же как edit*/}
-    <Resource name="posts" list={PostList} recordRepresentation="name" edit={PostEdit} create={PostCreated} icon={PostIcon}/>
+    <Resource name="proposals" list={ProposalsList} edit={PostEdit} create={PostCreated} icon={PostIcon}/>
   </Admin>
 )
 

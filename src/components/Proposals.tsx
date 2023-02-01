@@ -6,14 +6,14 @@ import { Datagrid, EditButton, List, ReferenceField, ReferenceInput, TextField, 
 // Первый элемент это текстинпут компанент отвечающий
 // за поиск его атрибут alwaysOn означет что он должен отображатся всегда
 // когда другие компаненты без это атрибута будут иметь функциональность добавления 
-const postFilters = [
+const proposalsFilters = [
   <TextInput source="q" label="Search" alwaysOn />,
   <ReferenceInput source="userId" label="User" reference="users" />,
 ];
 
 
-export const PostList = () => (
-    <List filters={postFilters}>
+export const ProposalsList = () => (
+    <List filters={proposalsFilters}>
         <Datagrid rowClick="edit">
             
             <TextField source="id"/>
